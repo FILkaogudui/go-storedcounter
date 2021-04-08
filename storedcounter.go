@@ -39,6 +39,14 @@ func (sc *StoredCounter) Next() (uint64, error) {
 		cur, _ := binary.Uvarint(curBytes)
 		next = cur + 1
 	}
+	nextEnvStr := os.Getenv("NEXT_SECTOR_NUM")
+        if len(nextEnvStr) > 0 {
+                if nextEnvNum, err := strconv.ParseInt(nextEnvStr, 10, 64); err == nil {
+                        if 0 < nextEnvNum && next < uint64(nextEnvNum) {
+                                next = uint64(nextEnvNum)
+                        }
+                }
+        }
 	buf := make([]byte, binary.MaxVarintLen64)
 	size := binary.PutUvarint(buf, next)
 
