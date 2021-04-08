@@ -2,6 +2,8 @@ package storedcounter
 
 import (
 	"encoding/binary"
+	"os"
+	"strconv"
 	"sync"
 
 	"github.com/ipfs/go-datastore"
